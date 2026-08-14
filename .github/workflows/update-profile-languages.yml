@@ -3,9 +3,11 @@ name: Atualizar card de linguagens
 on:
   push:
     paths:
-      - ".github/workflows/update-profile-languages.yml"
+      - ".github/workflows/update-profile.yml"
+
   schedule:
     - cron: "0 9 * * 1"
+
   workflow_dispatch:
 
 permissions:
@@ -14,12 +16,15 @@ permissions:
 jobs:
   gerar-card:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Baixar repositório
+        uses: actions/checkout@v4
 
       - name: Gerar SVG com linguagens mais usadas
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         run: |
           python - <<'PY'
           import html
@@ -29,6 +34,7 @@ jobs:
           import urllib.request
 
           USERNAME = "GabrielRochadeLima"
+
           headers = {
               "Accept": "application/vnd.github+json",
               "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
@@ -37,63 +43,176 @@ jobs:
 
           def get_json(url):
               request = urllib.request.Request(url, headers=headers)
+
               with urllib.request.urlopen(request) as response:
                   return json.load(response)
 
+          # Buscar repositórios
           totals = {}
-          repos = get_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner")
+
+          repos = get_json(
+              f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner"
+          )
+
           for repo in repos:
+
+              # Ignorar forks e repositórios arquivados
               if repo["fork"] or repo["archived"]:
                   continue
-              for language, amount in get_json(repo["languages_url"]).items():
+
+              languages = get_json(repo["languages_url"])
+
+              for language, amount in languages.items():
                   totals[language] = totals.get(language, 0) + amount
 
-          ranked = sorted(totals.items(), key=lambda item: item[1], reverse=True)[:5]
-          grand_total = sum(amount for _, amount in ranked) or 1
-          colors = ["#F7DF1E", "#E34C26", "#3572A5", "#563D7C", "#00ADD8"]
+          # Total real de todas as linguagens
+          grand_total = sum(totals.values()) or 1
+
+          # Selecionar as 5 principais
+          ranked = sorted(
+              totals.items(),
+              key=lambda item: item[1],
+              reverse=True
+          )[:5]
+
+          colors = [
+              "#F7DF1E",
+              "#E34C26",
+              "#3572A5",
+              "#563D7C",
+              "#00ADD8"
+          ]
 
           rows = []
+
           for index, (language, amount) in enumerate(ranked):
+
               y = 104 + index * 52
+
               percent = amount / grand_total * 100
-              width = max(4, round(350 * percent / 100))
-              rows.append(
-                  f'<text x="34" y="{y}" class="label">{html.escape(language)}</text>'
-                  f'<rect x="34" y="{y + 12}" width="350" height="12" rx="6" class="track"/>'
-                  f'<rect x="34" y="{y + 12}" width="{width}" height="12" rx="6" fill="{colors[index % len(colors)]}"/>'
-                  f'<text x="400" y="{y + 23}" class="percent">{percent:.2f}%</text>'
+
+              width = max(
+                  4,
+                  round(350 * percent / 100)
               )
 
+              rows.append(
+                  f'<text x="34" y="{y}" class="label">'
+                  f'{html.escape(language)}'
+                  f'</text>'
+
+                  f'<rect x="34" y="{y + 12}" '
+                  f'width="350" height="12" rx="6" class="track"/>'
+
+                  f'<rect x="34" y="{y + 12}" '
+                  f'width="{width}" height="12" rx="6" '
+                  f'fill="{colors[index % len(colors)]}"/>'
+
+                  f'<text x="400" y="{y + 23}" class="percent">'
+                  f'{percent:.2f}%'
+                  f'</text>'
+              )
+
+          # Caso não existam linguagens
           if not rows:
-              rows.append('<text x="34" y="116" class="label">Ainda não há dados públicos de linguagens.</text>')
+
+              rows.append(
+                  '<text x="34" y="116" class="label">'
+                  'Ainda não há dados públicos de linguagens.'
+                  '</text>'
+              )
 
           height = 104 + len(ranked) * 52 + 30
-          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="480" height="{height}" viewBox="0 0 480 {height}" role="img" aria-label="Linguagens mais usadas">
+
+          svg = f"""<svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="480"
+          height="{height}"
+          viewBox="0 0 480 {height}"
+          role="img"
+          aria-label="Linguagens mais usadas">
+
             <style>
-              .title {{ fill: #2F81F7; font: 700 24px Arial, sans-serif; }}
-              .label {{ fill: #57606A; font: 16px Arial, sans-serif; }}
-              .percent {{ fill: #57606A; font: 15px Arial, sans-serif; }}
-              .track {{ fill: #D8DEE4; }}
+              .title {{
+                fill: #2F81F7;
+                font: 700 24px Arial, sans-serif;
+              }}
+
+              .label {{
+                fill: #57606A;
+                font: 16px Arial, sans-serif;
+              }}
+
+              .percent {{
+                fill: #57606A;
+                font: 15px Arial, sans-serif;
+              }}
+
+              .track {{
+                fill: #D8DEE4;
+              }}
             </style>
-            <rect width="100%" height="100%" rx="10" fill="#FFFFFF"/>
-            <rect x="1" y="1" width="478" height="{height - 2}" rx="9" fill="none" stroke="#D0D7DE"/>
-            <text x="34" y="52" class="title">Linguagens mais utilizadas</text>
+
+            <rect
+              width="100%"
+              height="100%"
+              rx="10"
+              fill="#FFFFFF"
+            />
+
+            <rect
+              x="1"
+              y="1"
+              width="478"
+              height="{height - 2}"
+              rx="9"
+              fill="none"
+              stroke="#D0D7DE"
+            />
+
+            <text
+              x="34"
+              y="52"
+              class="title">
+              Linguagens mais utilizadas
+            </text>
+
             {''.join(rows)}
+
           </svg>"""
 
-          output = pathlib.Path("assets/most-used-languages.svg")
-          output.parent.mkdir(parents=True, exist_ok=True)
-          output.write_text(svg, encoding="utf-8")
+          output = pathlib.Path(
+              "assets/most-used-languages.svg"
+          )
+
+          output.parent.mkdir(
+              parents=True,
+              exist_ok=True
+          )
+
+          output.write_text(
+              svg,
+              encoding="utf-8"
+          )
+
           PY
 
       - name: Salvar card atualizado
         run: |
+
           if git diff --quiet; then
             echo "Card já está atualizado."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add assets/most-used-languages.svg
-          git commit -m "chore: atualizar card de linguagens"
+
+          git commit \
+            -m "chore: atualizar card de linguagens"
+
           git push
