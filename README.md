@@ -73,4 +73,4 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 
 💼 [LinkedIn](https://www.linkedin.com/in/gabrielrochadelima/)
 
-📧 **[gabrielrochadelima@hotmtmail.com](mailto:gabrielrochadelima@hotmtmail.com)**
+📧 **[gabrielrochadelima@hotmail.com](mailto:gabrielrochadelima@hotmail.com)**
