@@ -346,16 +346,19 @@ jobs:
 
 
           title_font = ImageFont.truetype(
-              FONT_TITLE,
-              28
+          FONT_TITLE,
+          23
           )
-
 
           language_font = ImageFont.truetype(
               FONT_NORMAL,
-              18
+              15
           )
 
+          percent_font = ImageFont.truetype(
+              FONT_NORMAL,
+              14
+          )
 
           percent_font = ImageFont.truetype(
               FONT_NORMAL,
@@ -391,14 +394,10 @@ jobs:
           # ==========================================
 
           draw.text(
-
-              (35, 30),
-
-              "Linguagens mais utilizadas",
-
-              fill=TEXT,
-
-              font=title_font
+            ( 30, 25),
+            "Linguagens mais utilizadas",
+            fill=TEXT,
+            font=title_font
           )
 
 
@@ -406,15 +405,15 @@ jobs:
           # CONFIGURAÇÃO DAS BARRAS
           # ==========================================
 
-          START_Y = 95
+          START_Y = 78
 
-          BAR_X = 35
-
-          BAR_WIDTH = 540
-
-          BAR_HEIGHT = 12
-
-          PERCENT_X = 600
+          BAR_X = 30
+          
+          BAR_WIDTH = 420
+          
+          BAR_HEIGHT = 10
+          
+          PERCENT_X = 465
 
 
           # ==========================================
@@ -425,11 +424,10 @@ jobs:
               top_languages
           ):
 
-              y = (
-                  START_Y
-                  + index * 55
-              )
-
+            y = (
+                START_Y
+                + index * 47
+            )
 
               # --------------------------------------
               # Porcentagem
