@@ -299,9 +299,9 @@ jobs:
           # CONFIGURAÇÃO DO CARD
           # ==========================================
 
-          WIDTH = 700
+          WIDTH = 560
 
-          HEIGHT = 390
+          HEIGHT = 330
 
           BACKGROUND = "#0D1117"
 
