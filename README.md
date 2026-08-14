@@ -57,6 +57,13 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=GabrielRochadeLima&theme=github_dark" alt="Resumo das estatísticas de Gabriel no GitHub" />
 </p>
 
+
+## 💻 Linguagens mais utilizadas
+
+<p align="left">
+  <img src="https://raw.githubusercontent.com/GabrielRochadeLima/GabrielRochadeLima/main/assets/most-used-languages.svg" alt="Linguagens mais utilizadas por Gabriel" />
+</p>
+
 ---
 
 ## 📫 Contato
