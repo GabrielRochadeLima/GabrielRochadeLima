@@ -1,16 +1,60 @@
-## Hi there 👋
+# 👋 Olá, eu sou Gabriel!
 
-<!--
-**GabrielRochadeLima/GabrielRochadeLima** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+### 💻 IT | Data | Automation 🚀
 
-Here are some ideas to get you started:
+Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dados, automação de processos e sistemas**.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
+
+## 🚀 Sobre mim
+
+💻 Tecnologia da Informação  
+📊 Dados e Business Intelligence  
+⚙️ Automação de processos  
+🗄️ Banco de dados e APIs  
+🎯 Sempre buscando transformar problemas em soluções através da tecnologia.
+
+---
+
+## 🛠️ Tecnologias & Ferramentas
+
+**Linguagens**
+- Python
+- SQL
+- HTML
+- CSS
+
+**Dados & BI**
+- Power BI
+- PostgreSQL
+- Supabase
+
+**Automação & Integrações**
+- n8n
+- APIs REST
+- Webhooks
+
+**Ferramentas**
+- Git
+- GitHub
+- Jira
+
+---
+
+## 📌 Projetos
+
+🚧 **Projetos em desenvolvimento...**
+
+---
+
+## 📊 GitHub
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=GabrielRochadeLima&show_icons=true&theme=dark)
+
+---
+
+## 📫 Contato
+
+💼 [LinkedIn](https://www.linkedin.com/in/gabrielrochadelima/))
+
+📧 **gabrielrochadelima@hotmtmail.com**
