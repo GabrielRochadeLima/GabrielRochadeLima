@@ -6,7 +6,6 @@ on:
       - ".github/workflows/update-profile-languages.yml"
 
   schedule:
-    # Toda segunda-feira às 09:00 UTC
     - cron: "0 9 * * 1"
 
   workflow_dispatch:
@@ -20,35 +19,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      # ==========================================
-      # 1. Baixar o repositório
-      # ==========================================
-
       - name: Checkout do repositório
         uses: actions/checkout@v4
-
-
-      # ==========================================
-      # 2. Instalar Python/Pillow
-      # ==========================================
 
       - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
           pip install pillow
 
-
-      # ==========================================
-      # 3. Buscar dados do GitHub e gerar PNG
-      # ==========================================
-
       - name: Gerar card de linguagens
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
         run: |
-
           python - <<'PY'
 
           import json
@@ -56,21 +38,8 @@ jobs:
           import urllib.request
           from PIL import Image, ImageDraw, ImageFont
 
-
-          # ==========================================
-          # CONFIGURAÇÕES
-          # ==========================================
-
           USERNAME = "GabrielRochadeLima"
-
           OUTPUT_FILE = "assets/most-used-languages.png"
-
-          API_BASE = "https://api.github.com"
-
-
-          # ==========================================
-          # AUTENTICAÇÃO
-          # ==========================================
 
           headers = {
               "Accept": "application/vnd.github+json",
@@ -79,13 +48,7 @@ jobs:
               "User-Agent": "GabrielRochadeLima-GitHub-Profile"
           }
 
-
-          # ==========================================
-          # FUNÇÃO PARA CONSULTAR API
-          # ==========================================
-
           def get_json(url):
-
               request = urllib.request.Request(
                   url,
                   headers=headers
@@ -94,21 +57,18 @@ jobs:
               with urllib.request.urlopen(request) as response:
                   return json.load(response)
 
-
           # ==========================================
-          # BUSCAR TODOS OS REPOSITÓRIOS PÚBLICOS
+          # BUSCAR REPOSITÓRIOS
           # ==========================================
 
           print("Buscando repositórios...")
 
           repos = []
-
           page = 1
 
           while True:
-
               url = (
-                  f"{API_BASE}/users/{USERNAME}/repos"
+                  f"https://api.github.com/users/{USERNAME}/repos"
                   f"?type=owner"
                   f"&visibility=public"
                   f"&per_page=100"
@@ -127,11 +87,9 @@ jobs:
 
               page += 1
 
-
           print(
               f"Total de repositórios encontrados: {len(repos)}"
           )
-
 
           # ==========================================
           # SOMAR LINGUAGENS
@@ -139,68 +97,42 @@ jobs:
 
           totals = {}
 
-
           for repo in repos:
 
               repo_name = repo["name"]
 
-              # Ignorar forks
               if repo["fork"]:
-                  print(
-                      f"Ignorando fork: {repo_name}"
-                  )
+                  print(f"Ignorando fork: {repo_name}")
                   continue
 
-
-              # Ignorar repositórios arquivados
               if repo["archived"]:
-                  print(
-                      f"Ignorando arquivado: {repo_name}"
-                  )
+                  print(f"Ignorando arquivado: {repo_name}")
                   continue
 
-
-              print(
-                  f"Analisando: {repo_name}"
-              )
-
-
-              languages_url = repo["languages_url"]
+              print(f"Analisando: {repo_name}")
 
               languages = get_json(
-                  languages_url
+                  repo["languages_url"]
               )
 
-
               for language, amount in languages.items():
-
                   totals[language] = (
-                      totals.get(language, 0)
-                      + amount
+                      totals.get(language, 0) + amount
                   )
 
-
           # ==========================================
-          # VERIFICAR SE EXISTEM DADOS
+          # VERIFICAR DADOS
           # ==========================================
 
           if not totals:
-
-              print(
-                  "Nenhuma linguagem encontrada."
-              )
-
+              print("Nenhuma linguagem encontrada.")
               raise SystemExit(0)
-
 
           # ==========================================
           # CALCULAR TOTAL
           # ==========================================
 
-          grand_total = sum(
-              totals.values()
-          )
-
+          grand_total = sum(totals.values())
 
           # ==========================================
           # ORDENAR LINGUAGENS
@@ -212,19 +144,14 @@ jobs:
               reverse=True
           )
 
-
-          # Pegar somente as 5 principais
           top_languages = ranked[:5]
-
 
           print("")
           print("==============================")
           print("LINGUAGENS ENCONTRADAS")
           print("==============================")
 
-
           for language, amount in ranked:
-
               percentage = (
                   amount / grand_total
               ) * 100
@@ -235,84 +162,50 @@ jobs:
                   f"({percentage:.2f}%)"
               )
 
-
           # ==========================================
-          # CORES DAS LINGUAGENS
+          # CORES
           # ==========================================
 
           colors = {
-
               "JavaScript": "#F7DF1E",
-
               "TypeScript": "#3178C6",
-
               "Python": "#3776AB",
-
               "HTML": "#E34C26",
-
               "CSS": "#563D7C",
-
               "Java": "#ED8B00",
-
               "C": "#A8B9CC",
-
               "C++": "#00599C",
-
               "C#": "#239120",
-
               "PHP": "#777BB4",
-
               "Ruby": "#CC342D",
-
               "Go": "#00ADD8",
-
               "Rust": "#DEA584",
-
               "Kotlin": "#A97BFF",
-
               "Swift": "#F05138",
-
               "Dart": "#00B4AB",
-
               "SQL": "#336791",
-
               "Jupyter Notebook": "#F37626",
-
               "Shell": "#89E051",
-
               "PowerShell": "#012456",
-
               "Vue": "#41B883",
-
               "SCSS": "#C6538C",
-
               "Less": "#1D365D",
-
               "R": "#198CE7",
-
               "Dockerfile": "#384D54"
-
           }
 
-
           # ==========================================
-          # CONFIGURAÇÃO DO CARD
+          # TAMANHO DO CARD
           # ==========================================
 
           WIDTH = 560
-
           HEIGHT = 330
 
           BACKGROUND = "#0D1117"
-
           BORDER = "#30363D"
-
           TEXT = "#F0F6FC"
-
           SECONDARY = "#8B949E"
-
           TRACK = "#21262D"
-
 
           # ==========================================
           # CRIAR IMAGEM
@@ -324,11 +217,7 @@ jobs:
               BACKGROUND
           )
 
-
-          draw = ImageDraw.Draw(
-              image
-          )
-
+          draw = ImageDraw.Draw(image)
 
           # ==========================================
           # FONTES
@@ -344,10 +233,9 @@ jobs:
               "dejavu/DejaVuSans.ttf"
           )
 
-
           title_font = ImageFont.truetype(
-          FONT_TITLE,
-          23
+              FONT_TITLE,
+              23
           )
 
           language_font = ImageFont.truetype(
@@ -360,133 +248,87 @@ jobs:
               14
           )
 
-          percent_font = ImageFont.truetype(
-              FONT_NORMAL,
-              16
-          )
-
-
           # ==========================================
-          # BORDA DO CARD
+          # BORDA
           # ==========================================
 
           draw.rounded_rectangle(
-
               (
                   1,
                   1,
                   WIDTH - 2,
                   HEIGHT - 2
               ),
-
               radius=15,
-
               fill=BACKGROUND,
-
               outline=BORDER,
-
               width=2
           )
-
 
           # ==========================================
           # TÍTULO
           # ==========================================
 
           draw.text(
-            ( 30, 25),
-            "Linguagens mais utilizadas",
-            fill=TEXT,
-            font=title_font
+              (30, 25),
+              "Linguagens mais utilizadas",
+              fill=TEXT,
+              font=title_font
           )
-
 
           # ==========================================
           # CONFIGURAÇÃO DAS BARRAS
           # ==========================================
 
           START_Y = 78
-
           BAR_X = 30
-          
           BAR_WIDTH = 420
-          
           BAR_HEIGHT = 10
-          
           PERCENT_X = 465
-
 
           # ==========================================
           # DESENHAR LINGUAGENS
           # ==========================================
 
-          for index, (language, amount) in enumerate(
-              top_languages
-          ):
+          for index, (language, amount) in enumerate(top_languages):
 
-            y = (
-                START_Y
-                + index * 47
-            )
-
-              # --------------------------------------
-              # Porcentagem
-              # --------------------------------------
+              y = START_Y + index * 47
 
               percentage = (
                   amount / grand_total
               ) * 100
 
-
-              # --------------------------------------
               # Nome da linguagem
-              # --------------------------------------
 
               draw.text(
-
                   (
                       BAR_X,
                       y
                   ),
-
                   language,
-
                   fill=TEXT,
-
                   font=language_font
               )
 
-
-              # --------------------------------------
               # Barra de fundo
-              # --------------------------------------
 
-              bar_y = y + 30
-
+              bar_y = y + 25
 
               draw.rounded_rectangle(
-
                   (
                       BAR_X,
                       bar_y,
                       BAR_X + BAR_WIDTH,
                       bar_y + BAR_HEIGHT
                   ),
-
-                  radius=6,
-
+                  radius=5,
                   fill=TRACK
               )
 
-
-              # --------------------------------------
               # Tamanho da barra
-              # --------------------------------------
 
               filled_width = max(
-
                   5,
-
                   int(
                       BAR_WIDTH
                       * percentage
@@ -494,123 +336,76 @@ jobs:
                   )
               )
 
-
-              # --------------------------------------
               # Cor da linguagem
-              # --------------------------------------
 
               language_color = colors.get(
-
                   language,
-
                   "#58A6FF"
               )
 
-
-              # --------------------------------------
               # Barra preenchida
-              # --------------------------------------
 
               draw.rounded_rectangle(
-
                   (
                       BAR_X,
                       bar_y,
                       BAR_X + filled_width,
                       bar_y + BAR_HEIGHT
                   ),
-
-                  radius=6,
-
+                  radius=5,
                   fill=language_color
               )
 
-
-              # --------------------------------------
               # Porcentagem
-              # --------------------------------------
 
               draw.text(
-
                   (
                       PERCENT_X,
-                      y + 23
+                      y + 17
                   ),
-
                   f"{percentage:.2f}%",
-
                   fill=SECONDARY,
-
                   font=percent_font
               )
 
-
           # ==========================================
-          # CRIAR PASTA ASSETS
+          # SALVAR
           # ==========================================
 
           os.makedirs(
-
               "assets",
-
               exist_ok=True
           )
 
-
-          # ==========================================
-          # SALVAR PNG
-          # ==========================================
-
           image.save(
-
               OUTPUT_FILE,
-
               "PNG",
-
               optimize=True
           )
-
 
           print("")
           print("==============================")
           print("CARD GERADO COM SUCESSO")
           print("==============================")
-          print(
-              f"Arquivo: {OUTPUT_FILE}"
-          )
-
+          print(f"Arquivo: {OUTPUT_FILE}")
 
           PY
 
-
-      # ==========================================
-      # 4. Verificar e salvar alterações
-      # ==========================================
-
       - name: Salvar card atualizado
         run: |
-
           if git diff --quiet -- assets/most-used-languages.png; then
-
             echo "Nenhuma alteração nos dados."
-
             exit 0
-
           fi
-
 
           git config user.name "github-actions[bot]"
 
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
 
-
-          git add \
-            assets/most-used-languages.png
-
+          git add assets/most-used-languages.png
 
           git commit \
             -m "chore: atualizar card de linguagens"
-
 
           git push
