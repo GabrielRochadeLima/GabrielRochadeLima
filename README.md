@@ -58,10 +58,13 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 </p>
 
 
-## 💻 Linguagens mais utilizadas
+<h2>💻 Linguagens mais utilizadas</h2>
 
-<p align="left">
-  <img src="https://raw.githubusercontent.com/GabrielRochadeLima/GabrielRochadeLima/main/assets/most-used-languages.svg" alt="Linguagens mais utilizadas por Gabriel" />
+<p align="center">
+  <img
+    src="./assets/most-used-languages.svg"
+    alt="Linguagens mais utilizadas"
+  />
 </p>
 
 ---
