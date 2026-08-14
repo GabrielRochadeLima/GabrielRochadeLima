@@ -3,7 +3,7 @@ name: Atualizar card de linguagens
 on:
   push:
     paths:
-      - ".github/workflows/update-profile.yml"
+      - ".github/workflows/update-profile-languages.yml"
 
   schedule:
     - cron: "0 9 * * 1"
