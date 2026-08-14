@@ -1,1 +1,49 @@
 
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300">
+  <rect width="480" height="300" rx="12" fill="#0d1117"></rect>
+  <rect x="1" y="1" width="478" height="298" rx="11" fill="none" stroke="#30363d"></rect>
+
+  <text x="30" y="45" fill="#f0f6fc" font-family="Arial" font-size="24" font-weight="bold">
+    Linguagens mais utilizadas
+  </text>
+
+  <text x="30" y="90" fill="#c9d1d9" font-family="Arial" font-size="16">
+    JavaScript
+  </text>
+
+  <rect x="30" y="100" width="350" height="12" rx="6" fill="#21262d"></rect>
+  <rect x="30" y="100" width="250" height="12" rx="6" fill="#f7df1e"></rect>
+  <text x="400" y="111" fill="#8b949e" font-family="Arial" font-size="15">
+    71.43%
+  </text>
+
+  <text x="30" y="145" fill="#c9d1d9" font-family="Arial" font-size="16">
+    HTML
+  </text>
+
+  <rect x="30" y="155" width="350" height="12" rx="6" fill="#21262d"></rect>
+  <rect x="30" y="155" width="80" height="12" rx="6" fill="#e34c26"></rect>
+  <text x="400" y="166" fill="#8b949e" font-family="Arial" font-size="15">
+    14.29%
+  </text>
+
+  <text x="30" y="200" fill="#c9d1d9" font-family="Arial" font-size="16">
+    TypeScript
+  </text>
+
+  <rect x="30" y="210" width="350" height="12" rx="6" fill="#21262d"></rect>
+  <rect x="30" y="210" width="45" height="12" rx="6" fill="#3178c6"></rect>
+  <text x="400" y="221" fill="#8b949e" font-family="Arial" font-size="15">
+    9.52%
+  </text>
+
+  <text x="30" y="255" fill="#c9d1d9" font-family="Arial" font-size="16">
+    CSS
+  </text>
+
+  <rect x="30" y="265" width="350" height="12" rx="6" fill="#21262d"></rect>
+  <rect x="30" y="265" width="20" height="12" rx="6" fill="#563d7c"></rect>
+  <text x="400" y="276" fill="#8b949e" font-family="Arial" font-size="15">
+    4.76%
+  </text>
+</svg>
