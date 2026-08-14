@@ -53,9 +53,8 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 
 ## 📊 GitHub Stats
 
-<p align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=GabrielRochadeLima&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true" alt="Estatísticas do GitHub de Gabriel" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=GabrielRochadeLima&layout=compact&langs_count=7&theme=tokyonight" alt="Linguagens mais usadas por Gabriel" />
+<p align="left">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=GabrielRochadeLima&theme=github_dark" alt="Resumo das estatísticas de Gabriel no GitHub" />
 </p>
 
 ---
