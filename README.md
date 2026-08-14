@@ -19,25 +19,29 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 ## 🛠️ Tecnologias & Ferramentas
 
 **Linguagens**
-- Python
-- SQL
-- HTML
-- CSS
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
 **Dados & BI**
-- Power BI
-- PostgreSQL
-- Supabase
+
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
 **Automação & Integrações**
-- n8n
-- APIs REST
-- Webhooks
+
+![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
+![REST API](https://img.shields.io/badge/REST%20APIs-02569B?style=for-the-badge&logo=fastapi&logoColor=white)
+![Webhooks](https://img.shields.io/badge/Webhooks-FF6C37?style=for-the-badge&logo=webhooks&logoColor=white)
 
 **Ferramentas**
-- Git
-- GitHub
-- Jira
+
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![Jira](https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white)
 
 ---
 
@@ -49,12 +53,15 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 
 ## 📊 GitHub Stats
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=GabrielRochadeLima&show_icons=true&theme=tokyonight)
+<p align="center">
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=GabrielRochadeLima&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true" alt="Estatísticas do GitHub de Gabriel" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=GabrielRochadeLima&layout=compact&langs_count=7&theme=tokyonight" alt="Linguagens mais usadas por Gabriel" />
+</p>
 
 ---
 
 ## 📫 Contato
 
-💼 [LinkedIn](https://www.linkedin.com/in/gabrielrochadelima/))
+💼 [LinkedIn](https://www.linkedin.com/in/gabrielrochadelima/)
 
-📧 **gabrielrochadelima@hotmtmail.com**
+📧 **[gabrielrochadelima@hotmtmail.com](mailto:gabrielrochadelima@hotmtmail.com)**
