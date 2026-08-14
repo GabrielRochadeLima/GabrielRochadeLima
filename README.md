@@ -47,9 +47,9 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 
 ---
 
-## 📊 GitHub
+## 📊 GitHub Stats
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=GabrielRochadeLima&show_icons=true&theme=dark)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=GabrielRochadeLima&show_icons=true&theme=tokyonight)
 
 ---
 
