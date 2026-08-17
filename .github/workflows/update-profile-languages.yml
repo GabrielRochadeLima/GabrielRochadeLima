@@ -32,7 +32,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python - <<'PY'
-
           import json
           import os
           import urllib.request
@@ -45,7 +44,7 @@ jobs:
               "Accept": "application/vnd.github+json",
               "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
               "X-GitHub-Api-Version": "2022-11-28",
-              "User-Agent": "GabrielRochadeLima-GitHub-Profile"
+              "User-Agent": "GitHub-Profile-Language-Stats"
           }
 
           def get_json(url):
@@ -57,11 +56,9 @@ jobs:
               with urllib.request.urlopen(request) as response:
                   return json.load(response)
 
-          # ==========================================
-          # BUSCAR REPOSITÓRIOS
-          # ==========================================
-
-          print("Buscando repositórios...")
+          print("================================")
+          print("BUSCANDO REPOSITÓRIOS")
+          print("================================")
 
           repos = []
           page = 1
@@ -87,56 +84,38 @@ jobs:
 
               page += 1
 
-          print(
-              f"Total de repositórios encontrados: {len(repos)}"
-          )
+          print(f"Repositórios encontrados: {len(repos)}")
 
-          # ==========================================
-          # SOMAR LINGUAGENS
-          # ==========================================
+          print("")
+          print("================================")
+          print("ANALISANDO LINGUAGENS")
+          print("================================")
 
           totals = {}
 
           for repo in repos:
-
               repo_name = repo["name"]
 
-              if repo["fork"]:
+              if repo.get("fork", False):
                   print(f"Ignorando fork: {repo_name}")
                   continue
 
-              if repo["archived"]:
+              if repo.get("archived", False):
                   print(f"Ignorando arquivado: {repo_name}")
                   continue
 
               print(f"Analisando: {repo_name}")
 
-              languages = get_json(
-                  repo["languages_url"]
-              )
+              languages = get_json(repo["languages_url"])
 
               for language, amount in languages.items():
-                  totals[language] = (
-                      totals.get(language, 0) + amount
-                  )
-
-          # ==========================================
-          # VERIFICAR DADOS
-          # ==========================================
+                  totals[language] = totals.get(language, 0) + amount
 
           if not totals:
               print("Nenhuma linguagem encontrada.")
               raise SystemExit(0)
 
-          # ==========================================
-          # CALCULAR TOTAL
-          # ==========================================
-
           grand_total = sum(totals.values())
-
-          # ==========================================
-          # ORDENAR LINGUAGENS
-          # ==========================================
 
           ranked = sorted(
               totals.items(),
@@ -147,24 +126,21 @@ jobs:
           top_languages = ranked[:5]
 
           print("")
-          print("==============================")
-          print("LINGUAGENS ENCONTRADAS")
-          print("==============================")
+          print("================================")
+          print("TOP 5 LINGUAGENS")
+          print("================================")
 
-          for language, amount in ranked:
-              percentage = (
-                  amount / grand_total
-              ) * 100
+          for position, (language, amount) in enumerate(
+              top_languages,
+              start=1
+          ):
+              percentage = (amount / grand_total) * 100
 
               print(
-                  f"{language}: "
+                  f"{position}. {language}: "
                   f"{amount} bytes "
                   f"({percentage:.2f}%)"
               )
-
-          # ==========================================
-          # CORES
-          # ==========================================
 
           colors = {
               "JavaScript": "#F7DF1E",
@@ -194,10 +170,6 @@ jobs:
               "Dockerfile": "#384D54"
           }
 
-          # ==========================================
-          # TAMANHO DO CARD
-          # ==========================================
-
           WIDTH = 560
           HEIGHT = 330
 
@@ -207,10 +179,6 @@ jobs:
           SECONDARY = "#8B949E"
           TRACK = "#21262D"
 
-          # ==========================================
-          # CRIAR IMAGEM
-          # ==========================================
-
           image = Image.new(
               "RGB",
               (WIDTH, HEIGHT),
@@ -218,10 +186,6 @@ jobs:
           )
 
           draw = ImageDraw.Draw(image)
-
-          # ==========================================
-          # FONTES
-          # ==========================================
 
           FONT_TITLE = (
               "/usr/share/fonts/truetype/"
@@ -248,10 +212,6 @@ jobs:
               14
           )
 
-          # ==========================================
-          # BORDA
-          # ==========================================
-
           draw.rounded_rectangle(
               (
                   1,
@@ -265,10 +225,6 @@ jobs:
               width=2
           )
 
-          # ==========================================
-          # TÍTULO
-          # ==========================================
-
           draw.text(
               (30, 25),
               "Linguagens mais utilizadas",
@@ -276,41 +232,25 @@ jobs:
               font=title_font
           )
 
-          # ==========================================
-          # CONFIGURAÇÃO DAS BARRAS
-          # ==========================================
-
           START_Y = 78
           BAR_X = 30
           BAR_WIDTH = 420
           BAR_HEIGHT = 10
           PERCENT_X = 465
 
-          # ==========================================
-          # DESENHAR LINGUAGENS
-          # ==========================================
-
-          for index, (language, amount) in enumerate(top_languages):
-
+          for index, (language, amount) in enumerate(
+              top_languages
+          ):
               y = START_Y + index * 47
 
-              percentage = (
-                  amount / grand_total
-              ) * 100
-
-              # Nome da linguagem
+              percentage = (amount / grand_total) * 100
 
               draw.text(
-                  (
-                      BAR_X,
-                      y
-                  ),
+                  (BAR_X, y),
                   language,
                   fill=TEXT,
                   font=language_font
               )
-
-              # Barra de fundo
 
               bar_y = y + 25
 
@@ -325,8 +265,6 @@ jobs:
                   fill=TRACK
               )
 
-              # Tamanho da barra
-
               filled_width = max(
                   5,
                   int(
@@ -336,14 +274,10 @@ jobs:
                   )
               )
 
-              # Cor da linguagem
-
               language_color = colors.get(
                   language,
                   "#58A6FF"
               )
-
-              # Barra preenchida
 
               draw.rounded_rectangle(
                   (
@@ -356,8 +290,6 @@ jobs:
                   fill=language_color
               )
 
-              # Porcentagem
-
               draw.text(
                   (
                       PERCENT_X,
@@ -367,10 +299,6 @@ jobs:
                   fill=SECONDARY,
                   font=percent_font
               )
-
-          # ==========================================
-          # SALVAR
-          # ==========================================
 
           os.makedirs(
               "assets",
@@ -384,28 +312,24 @@ jobs:
           )
 
           print("")
-          print("==============================")
+          print("================================")
           print("CARD GERADO COM SUCESSO")
-          print("==============================")
+          print("================================")
           print(f"Arquivo: {OUTPUT_FILE}")
 
           PY
 
       - name: Salvar card atualizado
         run: |
-          if git diff --quiet -- assets/most-used-languages.png; then
-            echo "Nenhuma alteração nos dados."
-            exit 0
-          fi
-
           git config user.name "github-actions[bot]"
-
-          git config user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add assets/most-used-languages.png
 
-          git commit \
-            -m "chore: atualizar card de linguagens"
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração no card."
+            exit 0
+          fi
 
+          git commit -m "chore: atualizar card de linguagens"
           git push
