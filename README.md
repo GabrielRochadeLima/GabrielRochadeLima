@@ -48,6 +48,9 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 ## 📌 Projetos
 
 🚧 **Projetos em desenvolvimento...**
+- Hekp desk
+- Sistema de Login
+- Sistema de conferência de produtos automatizada
 
 ---
 
