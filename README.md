@@ -52,7 +52,6 @@ Sou apaixonado por tecnologia e desenvolvimento de soluções, com foco em **dad
 - Sistema de Login
 - Sistema de conferência de produtos automatizada com integração ao Banco de Dados (Supabase)
 - Extração de vendas e estoque através de API
-- 
 ---
 
 ## 📊 GitHub Stats
